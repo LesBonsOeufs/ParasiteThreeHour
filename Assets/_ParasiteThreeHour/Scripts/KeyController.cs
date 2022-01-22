@@ -28,8 +28,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         {
             isDigging = Input.GetKey(digKey);
 
-            Debug.Log(isDigging);
-
             if (Input.GetKeyDown(screamKey))
                 OnScream?.Invoke(this);
         }

@@ -9,8 +9,6 @@ using UnityEngine;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
-    public delegate void LevelManagerEventHandler(LevelManager sender);
-
     public class LevelManager : MonoBehaviour
     {
         [Header("Colors")]
@@ -35,8 +33,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         public Vector3 ChipScale { get; private set; }
 
         private Vector3 worldOriginPosition;
-
-        public event LevelManagerEventHandler OnLevelLoadEnd;
 
         private void Awake()
         {
@@ -112,8 +108,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
                     }
                 }
             }
-
-            OnLevelLoadEnd?.Invoke(this);
         }
 
         private void OnDestroy()

@@ -2,19 +2,25 @@
 /// Author : Gabriel Bernabeu
 /// Date : 22/01/2022 12:05
 ///-----------------------------------------------------------------
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour {
     public class CameraMotor : MonoBehaviour
     {
-        [SerializeField] private float yOffsetFromPlayer = -1.5f;
+        [SerializeField] private float yOffsetFromLevel = -1.5f;
+        [SerializeField] private float yOffsetFromPlayer = -1f;
+        [SerializeField] private float zoom = 0.2f;
 
-        private void Start()
+        public void Setup()
         {
             Player.OnDigDown += Player_OnDigDown;
-            LevelManager.Instance.OnLevelLoadEnd += LevelManager_OnLevelLoadEnd;
+
+            Camera lCamera = Camera.main;
+            float lHorizontalCameraSize = (LevelManager.Instance.LevelLength - zoom) * 0.5f;
+
+            lCamera.orthographicSize = lHorizontalCameraSize / lCamera.aspect;
+            lCamera.transform.position = GameManager.Instance.WorldOriginPoint.position + 
+                                         new Vector3(LevelManager.Instance.LevelLength * 0.5f, yOffsetFromPlayer, lCamera.transform.position.z);
         }
 
         private void Player_OnDigDown (Player sender)
@@ -23,17 +29,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
 
             if (transform.position.y > lPlayerYPos + yOffsetFromPlayer)
                 transform.position = new Vector3(transform.position.x, lPlayerYPos + yOffsetFromPlayer, transform.position.z);
-        }
-
-        private void LevelManager_OnLevelLoadEnd (LevelManager sender)
-        {
-            Camera lCamera = Camera.main;
-            float lHorizontalCameraSize = sender.LevelLength * 0.5f;
-
-            lCamera.orthographicSize = lHorizontalCameraSize / lCamera.aspect;
-            lCamera.transform.position = GameManager.Instance.WorldOriginPoint.position + new Vector3(lHorizontalCameraSize, 0f, lCamera.transform.position.z);
-
-            LevelManager.Instance.OnLevelLoadEnd -= LevelManager_OnLevelLoadEnd;
         }
 
         private void OnDestroy()

@@ -2,9 +2,6 @@
 /// Author : Gabriel Bernabeu
 /// Date : 22/01/2022 10:22
 ///-----------------------------------------------------------------
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour {
@@ -48,6 +45,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
         private void Start()
         {
             LevelManager.Instance.InitLevel();
+
+            Camera.main.GetComponent<CameraMotor>().Setup();
 
             InitPlayers();
         }
