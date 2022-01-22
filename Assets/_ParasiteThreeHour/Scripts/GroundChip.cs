@@ -11,13 +11,15 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
     public class GroundChip : MonoBehaviour
     {
-        public static void CreateChip(Vector2 position, Vector2 scale, Color color)
+        public static Transform CreateChip(Vector2 position, Vector2 scale, Color color, Transform parent)
         {
-            Transform lGroundChipTransform = Instantiate(GameManager.Instance.GroundChipObject, GameManager.Instance.WorldOriginPoint).transform;
+            Transform lGroundChipTransform = Instantiate(GameManager.Instance.GroundChipObject, parent).transform;
 
             lGroundChipTransform.position = position;
             lGroundChipTransform.localScale = scale;
             lGroundChipTransform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+
+            return lGroundChipTransform;
         }
 
         public void Break()

@@ -11,6 +11,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
     public class LevelManager : MonoBehaviour
     {
+        [SerializeField] private Transform groundChipsParent = default;
+
         [Header("Colors")]
         [SerializeField] private Color groundLayer1Color = Color.white;
         [SerializeField] private Color groundLayer2Color = Color.grey;
@@ -71,8 +73,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
                     {
                         lPosition.y = lInitPosition.y - ChipScale.y * ((i * chipPerSquare) + k);
                         lPosition.x = lInitPosition.x + ChipScale.x * j;
-                        
-                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer1Color);
+
+                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer1Color, groundChipsParent);
                     }
                 }
             }
@@ -88,7 +90,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
                         lPosition.y = lInitPosition.y - ChipScale.y * ((i * chipPerSquare) + k);
                         lPosition.x = lInitPosition.x + ChipScale.x * j;
 
-                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer2Color);
+                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer2Color, groundChipsParent);
                     }
                 }
             }
@@ -104,7 +106,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
                         lPosition.y = lInitPosition.y - ChipScale.y * ((i * chipPerSquare) + k);
                         lPosition.x = lInitPosition.x + ChipScale.x * j;
 
-                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer3Color);
+                        GroundChip.CreateChip(lPosition, ChipScale, groundLayer3Color, groundChipsParent);
                     }
                 }
             }

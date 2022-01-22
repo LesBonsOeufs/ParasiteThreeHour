@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
@@ -14,18 +15,55 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
     {
         [SerializeField] private string groundChipTag = "GroundChip";
         [SerializeField] private float diggingSpeed = 2f;
+        [SerializeField] private float screamDuration = 1f;
+        [SerializeField] private float unsafeGroundDurationOnScream = 0.7f;
+        //[SerializeField] private float screamCooldown = 5f;
+        [SerializeField] private float stunDurationOnHitUnsafeGround = 1.5f;
+
+        public static bool PoisonGround = false;
 
         private KeyController controller;
+        private float screamCounter = 0f;
+        private UnityAction DoAction;
 
         public static event PlayerEventHandler OnDigDown;
 
+        private void Start()
+        {
+            SetModeNormal();
+        }
+
         private void Update()
+        {
+            DoAction();
+        }
+        
+        private void SetModeNormal()
+        {
+            DoAction = DoActionNormal;
+        }
+
+        private void DoActionNormal()
         {
             if (controller.isDigging)
             {
                 transform.Translate(new Vector3(0f, -diggingSpeed * Time.deltaTime, 0f));
                 OnDigDown?.Invoke(this);
             }
+        }
+
+        private void SetModeScream()
+        {
+            DoAction = DoActionScream;
+            screamCounter = screamDuration;
+        }
+
+        private void DoActionScream()
+        {
+            screamCounter -= Time.deltaTime;
+
+            if (screamCounter < 0f)
+                SetModeNormal();
         }
 
         public void SetController(KeyController keyController)
@@ -39,13 +77,15 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         private void KeyController_OnScream(KeyController sender)
         {
-            Debug.Log("BURG");
+            if (screamCounter <= 0f)
+            {
+                Debug.Log("BURG");
+                SetModeScream();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("burger");
-
             if (collision.CompareTag(groundChipTag))
                 collision.GetComponent<GroundChip>().Break();
         }
