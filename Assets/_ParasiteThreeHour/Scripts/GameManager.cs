@@ -7,13 +7,17 @@ using UnityEngine;
 namespace Com.LesBonsOeufs.ParasiteThreeHour {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Transform worldOriginPoint;
-        [SerializeField] private GameObject groundChipObject;
-        [SerializeField] private GameObject playerObject;
+        [SerializeField] private Transform worldOriginPoint = null;
+        [SerializeField] private GameObject groundChipPivotObject = null;
+        [SerializeField] private GameObject playerPivotObject = null;
         [SerializeField] private float playerChipsNbFromLevelExtremity = 3f;
         [SerializeField] private float playerYShift = 0.5f;
-        [SerializeField] private Color player1Color = Color.green;
-        [SerializeField] private Color player2Color = Color.red;
+        //[SerializeField] private Color player1Color = Color.green;
+        //[SerializeField] private Color player2Color = Color.red;
+
+        [Header("Animators")]
+        [SerializeField] private RuntimeAnimatorController player1Animations = null;
+        [SerializeField] private RuntimeAnimatorController player2Animations = null;
 
         [Header("Controls")]
         [SerializeField] private KeyCode player1Dig = KeyCode.S;
@@ -24,7 +28,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
         private KeyController player1Controller;
         private KeyController player2Controller;
 
-        public GameObject GroundChipObject => groundChipObject;
+        public GameObject GroundChipObject => groundChipPivotObject;
         public Transform WorldOriginPoint => worldOriginPoint;
 
         public static GameManager Instance { get; private set; }
@@ -56,22 +60,26 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
             float lXShiftFromLevelExtremity = LevelManager.Instance.ChipScale.x * 0.5f + 
                                               LevelManager.Instance.ChipScale.x * playerChipsNbFromLevelExtremity;
 
-            Transform lPlayerTransform = Instantiate(playerObject).transform;
-            lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player1Color;
+            Transform lPlayerTransform = Instantiate(playerPivotObject).transform;
+            Player lPlayerScript = lPlayerTransform.GetChild(0).GetComponent<Player>();
+            //lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player1Color;
             lPlayerTransform.position = WorldOriginPoint.position + new Vector3(lXShiftFromLevelExtremity, playerYShift, 0f);
 
             player1Controller = new KeyController();
             player1Controller.SetKeys(player1Dig, player1Scream);
-            lPlayerTransform.GetChild(0).GetComponent<Player>().SetController(player1Controller);
+            lPlayerScript.SetController(player1Controller);
+            lPlayerScript.SetRuntimeAnimatorController(player1Animations);
 
-            lPlayerTransform = Instantiate(playerObject).transform;
-            lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player2Color;
+            lPlayerTransform = Instantiate(playerPivotObject).transform;
+            lPlayerScript = lPlayerTransform.GetChild(0).GetComponent<Player>();
+            //lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player2Color;
             lPlayerTransform.position = WorldOriginPoint.position 
                                         + new Vector3(LevelManager.Instance.LevelLength - lXShiftFromLevelExtremity, playerYShift, 0f);
 
             player2Controller = new KeyController();
             player2Controller.SetKeys(player2Dig, player2Scream);
-            lPlayerTransform.GetChild(0).GetComponent<Player>().SetController(player2Controller);
+            lPlayerScript.SetController(player2Controller);
+            lPlayerScript.SetRuntimeAnimatorController(player2Animations);
         }
 
         private void Update()

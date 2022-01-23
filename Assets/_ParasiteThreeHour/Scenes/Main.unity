@@ -199,12 +199,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldOriginPoint: {fileID: 737518259}
-  groundChipObject: {fileID: 591265193051258695, guid: a273d8b485fb0c9498be0810c0dc9c64, type: 3}
-  playerObject: {fileID: 2079899397671834863, guid: a67b75868c06f854ca4ced766ed2fa4f, type: 3}
+  groundChipPivotObject: {fileID: 591265193051258695, guid: a273d8b485fb0c9498be0810c0dc9c64, type: 3}
+  playerPivotObject: {fileID: 2079899397671834863, guid: a67b75868c06f854ca4ced766ed2fa4f, type: 3}
   playerChipsNbFromLevelExtremity: 3
   playerYShift: 1
-  player1Color: {r: 0.11244416, g: 1, b: 0, a: 1}
-  player2Color: {r: 1, g: 0, b: 0, a: 1}
+  player1Animations: {fileID: 9100000, guid: 51be876f81a51bd4da653500b3bcae08, type: 2}
+  player2Animations: {fileID: 22100000, guid: 2f263bdc64ce7294ca7e8282833dec2f, type: 2}
   player1Dig: 304
   player1Scream: 109
   player2Dig: 281
@@ -258,7 +258,7 @@ MonoBehaviour:
   groundLayer3Color: {r: 0, g: 0, b: 0, a: 1}
   levelLength: 30
   levelHeight: 30
-  nbHorizontalSquares: 22
+  nbHorizontalSquares: 14
   nbLayer1Squares: 3
   nbLayer2Squares: 5
   nbLayer3Squares: 5
@@ -455,7 +455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7121075861190935565, guid: 6dfbad72c84dde24f8a49aab4df9e366, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7121075861190935565, guid: 6dfbad72c84dde24f8a49aab4df9e366, type: 3}
       propertyPath: m_LocalRotation.w
