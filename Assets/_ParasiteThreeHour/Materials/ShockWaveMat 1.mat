@@ -42,7 +42,7 @@ Material:
     - _speed: 1
     - _timeRatio: 0
     m_Colors:
-    - _focalPoint: {r: 0.7542373, g: 0.7297269, b: 10, a: 0}
+    - _focalPoint: {r: 0.18220337, g: 0.7297269, b: 10, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1775195051556322960
 MonoBehaviour:
