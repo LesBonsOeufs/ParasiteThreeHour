@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShockWaveMat
+  m_Name: ShockWaveMat 0
   m_Shader: {fileID: -6465566751694194690, guid: a192289029d0b84409c2a77fa61fb337, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -36,12 +36,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_285fead90c314172ba82b665702d4c64: 0.5
     - Vector1_5e0049e18dae46ea95fb6150fb51fa8e: 0.2
-    - Vector1_7cf26b380b8b41e9ba98afaf42ac427a: -0.04
-    - Vector1_8bffd1dfedf14cd88671d14ff0e9d9bf: 1.777778
+    - _magnification: -0.04
+    - _sizeRatio: 1.7773238
+    - _speed: 1
+    - _timeRatio: 0
     m_Colors:
-    - Vector2_29dc4d2125fe437c9f11293d296e5e50: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _focalPoint: {r: 0.8466872, g: 0.6512853, b: 10, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1775195051556322960
 MonoBehaviour:

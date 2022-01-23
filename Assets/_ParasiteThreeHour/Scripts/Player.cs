@@ -10,6 +10,7 @@ using UnityEngine.Events;
 namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
     public delegate void PlayerEventHandler(Player sender);
+    public delegate void PlayerScreamEventHandler(Player sender, float duration);
 
     public class Player : MonoBehaviour
     {
@@ -27,6 +28,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         private UnityAction DoAction;
 
         public static event PlayerEventHandler OnDigDown;
+        public static event PlayerScreamEventHandler OnScream;
 
         private void Start()
         {
@@ -80,6 +82,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             if (screamCounter <= 0f)
             {
                 Debug.Log("BURG");
+
+                OnScream?.Invoke(this, screamDuration);
                 SetModeScream();
             }
         }

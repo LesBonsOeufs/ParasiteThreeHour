@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4020659910587444610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c804fa826cc654194d15c41f88c8a0, type: 3}
+  m_Name: ShockWave1
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    Event: 500
+    blitMaterial: {fileID: 2100000, guid: c04b2c4db0817d74aa0772f96761d1fe, type: 2}
+    blitMaterialPassIndex: 0
+    destination: 0
+    textureId: _BlitPassTexture2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,8 +32,9 @@ MonoBehaviour:
   m_Name: UniversalRenderPipelineAsset_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: 6728554997914434969}
-  m_RendererFeatureMap: 997d5e061fa1605d
+  - {fileID: 6869069204988168002}
+  - {fileID: -4020659910587444610}
+  m_RendererFeatureMap: 4207e54c0cd6535f7e12c81a1dbf33c8
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -43,7 +63,7 @@ MonoBehaviour:
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
   m_AccurateGbufferNormals: 0
---- !u!114 &6728554997914434969
+--- !u!114 &6869069204988168002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,7 +73,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9c804fa826cc654194d15c41f88c8a0, type: 3}
-  m_Name: FullScreenShading
+  m_Name: ShockWave0
   m_EditorClassIdentifier: 
   m_Active: 0
   settings:
@@ -61,4 +81,4 @@ MonoBehaviour:
     blitMaterial: {fileID: 2100000, guid: cbf5120ca37cfd54e9af1c439787bc72, type: 2}
     blitMaterialPassIndex: 0
     destination: 0
-    textureId: _BlitPassTexture
+    textureId: _BlitPassTexture1
