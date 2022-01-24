@@ -27,7 +27,9 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         public static bool PoisonGround = false;
 
         private Animator animator;
+        private ParticleSystem digParticles;
         private KeyController controller;
+
         private UnityAction DoAction;
 
         private float counter = 0f;
@@ -40,6 +42,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            digParticles = GetComponent<ParticleSystem>();
         }
 
         private void Start()
@@ -146,6 +149,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         {
             if (collision.CompareTag(groundChipTag))
             {
+                digParticles.startColor = collision.GetComponent<SpriteRenderer>().color;
+                digParticles.Emit(10);
                 OnHitChip?.Invoke(this);
                 collision.GetComponent<GroundChip>().Break();
             }
