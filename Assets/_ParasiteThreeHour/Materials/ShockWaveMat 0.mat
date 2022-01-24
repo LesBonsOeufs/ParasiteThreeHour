@@ -38,11 +38,11 @@ Material:
     m_Floats:
     - Vector1_5e0049e18dae46ea95fb6150fb51fa8e: 0.3
     - _magnification: -0.037
-    - _sizeRatio: 1.3333334
+    - _sizeRatio: 1.7786484
     - _speed: 1
     - _timeRatio: 0
     m_Colors:
-    - _focalPoint: {r: 0.74052393, g: 0.6496553, b: 10, a: 0}
+    - _focalPoint: {r: 0.8208556, g: 0.723973, b: 9.550097, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1775195051556322960
 MonoBehaviour:

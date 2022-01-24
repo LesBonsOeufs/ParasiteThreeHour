@@ -23,6 +23,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         [SerializeField] private float screamDuration = 1f;
         [SerializeField] private float screamCooldown = 5f;
         [SerializeField] private float stunDuration = 2.5f;
+        [SerializeField] private Color stunColor = new Color(0.223f, 0.223f, 0.223f);
+        [SerializeField] private int nStunColorLoops = 3;
 
         public static bool PoisonGround = false;
 
@@ -137,6 +139,14 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             DoAction = DoActionStunned;
             OnStunned?.Invoke(this);
             counter = stunDuration;
+
+            SpriteRenderer lSpriteRenderer = GetComponent<SpriteRenderer>();
+            Color lInitColor = lSpriteRenderer.color;
+            float lIndividualTweenDuration = stunDuration / (nStunColorLoops * 2f);
+
+            DOTween.Sequence(lSpriteRenderer)
+                .Append(lSpriteRenderer.DOColor(stunColor, lIndividualTweenDuration))
+                .Append(lSpriteRenderer.DOColor(lInitColor, lIndividualTweenDuration)).SetLoops(nStunColorLoops);
         }
 
         private void DoActionStunned()

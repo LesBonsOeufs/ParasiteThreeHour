@@ -184,6 +184,8 @@ MonoBehaviour:
   screamDuration: 1
   screamCooldown: 1
   stunDuration: 2.5
+  stunColor: {r: 0.6132076, g: 0.44197226, b: 0.4658152, a: 1}
+  nStunColorLoops: 3
 --- !u!95 &5497642545611340239
 Animator:
   serializedVersion: 3
