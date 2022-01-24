@@ -67,6 +67,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
             Material lShockWaveMatInstance = lBlitRendererFeature.settings.blitMaterial;
 
             lBlitRendererFeature.SetActive(true);
+
             lShockWaveMatInstance.SetVector("_focalPoint", Camera.main.WorldToViewportPoint(position));
             lShockWaveMatInstance.SetFloat("_speed", 1f / duration);
 
@@ -85,16 +86,16 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
 
                 shockWaveMatInstance.SetFloat("_timeRatio", shockWaveMatInstance.GetFloat("_timeRatio") + Time.deltaTime);
                 shockWaveMatInstance.SetFloat("_magnification", lInitMagnification - lInitMagnification
-                                                                * ExpoEaseOut(shockWaveMatInstance.GetFloat("_timeRatio")));
+                                                                * ExpoEaseIn(shockWaveMatInstance.GetFloat("_timeRatio")));
             }
 
             shockWaveMatInstance.SetFloat("_magnification", lInitMagnification);
             blitRendererFeature.SetActive(false);
         }
 
-        private float ExpoEaseOut(float ratio)
+        private float ExpoEaseIn(float ratio)
         {
-            return ratio == 1 ? 1 : 1 - Mathf.Pow(2f, -10 * ratio);
+            return ratio == 0 ? 0 : Mathf.Pow(2f, 10f * ratio - 10f);
         }
 
         private void OnDestroy()

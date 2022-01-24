@@ -4,12 +4,17 @@
 ///-----------------------------------------------------------------
 using UnityEngine;
 
-namespace Com.LesBonsOeufs.ParasiteThreeHour {
+namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Transform worldOriginPoint = null;
-        [SerializeField] private GameObject groundChipPivotObject = null;
+        [SerializeField] private Transform _worldOriginPoint = null;
+
+        [Header("Objects")]
+        [SerializeField] private GameObject _groundChipPivotObject = null;
         [SerializeField] private GameObject playerPivotObject = null;
+        [SerializeField] private GameObject _eyeObject = null;
+
+        [Header("Players positioning")]
         [SerializeField] private float playerChipsNbFromLevelExtremity = 3f;
         [SerializeField] private float playerYShift = 0.5f;
         //[SerializeField] private Color player1Color = Color.green;
@@ -28,8 +33,9 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
         private KeyController player1Controller;
         private KeyController player2Controller;
 
-        public GameObject GroundChipObject => groundChipPivotObject;
-        public Transform WorldOriginPoint => worldOriginPoint;
+        public GameObject GroundChipObject => _groundChipPivotObject;
+        public GameObject EyeObject => _eyeObject;
+        public Transform WorldOriginPoint => _worldOriginPoint;
 
         public static GameManager Instance { get; private set; }
 

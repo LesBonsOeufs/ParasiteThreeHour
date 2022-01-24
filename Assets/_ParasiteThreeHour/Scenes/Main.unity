@@ -199,10 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc3698cdfa60204e8416767388d4ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldOriginPoint: {fileID: 737518259}
-  groundChipPivotObject: {fileID: 591265193051258695, guid: a273d8b485fb0c9498be0810c0dc9c64, type: 3}
+  _worldOriginPoint: {fileID: 737518259}
+  _groundChipPivotObject: {fileID: 591265193051258695, guid: a273d8b485fb0c9498be0810c0dc9c64, type: 3}
   playerPivotObject: {fileID: 2079899397671834863, guid: a67b75868c06f854ca4ced766ed2fa4f, type: 3}
-  playerChipsNbFromLevelExtremity: 1
+  _eyeObject: {fileID: 760117192508653057, guid: e4b3fbcf1fee33f459fef78165fd091f, type: 3}
+  playerChipsNbFromLevelExtremity: 2
   playerYShift: 1
   player1Animations: {fileID: 9100000, guid: 51be876f81a51bd4da653500b3bcae08, type: 2}
   player2Animations: {fileID: 22100000, guid: 2f263bdc64ce7294ca7e8282833dec2f, type: 2}
@@ -253,6 +254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3582c3f8992b8184f8bf603aed77f877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dangerousGroundDuration: 0.7
+  animDurationOnStun: 1
+  minEyesIfDangerous: 25
+  maxEyesIfDangerous: 35
 --- !u!1 &603792725
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,15 +303,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundChipsParent: {fileID: 737518259}
   groundLayer1Color: {r: 1, g: 1, b: 1, a: 1}
-  groundLayer2Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  groundLayer3Color: {r: 0, g: 0, b: 0, a: 1}
-  levelLength: 30
-  levelHeight: 30
-  nbHorizontalSquares: 8
+  groundLayer2Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+  groundLayer3Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+  _levelLength: 40
+  _levelHeight: 30
+  _nHorizontalSquares: 11
   nbLayer1Squares: 3
   nbLayer2Squares: 5
   nbLayer3Squares: 5
-  chipPerSquare: 6
+  chipPerSquare: 5
 --- !u!1 &670993367
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,9 +729,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295e002bcd715774dbab88e5984267cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yOffsetFromLevel: -1.5
   yOffsetFromPlayer: -1
-  zoom: 0.5
+  zoom: 6
+  screamShakeStrength: 0.5
+  screamShakeDuration: 0.4
+  stunShakeStrength: 1.3
+  stunShakeDuration: 0.6
+  adjustmentDuration: 0.4
+  smoothFollowDuration: 0.1
 --- !u!1 &1248905240
 GameObject:
   m_ObjectHideFlags: 0

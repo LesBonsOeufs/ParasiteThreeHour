@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
@@ -20,9 +21,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         [SerializeField] private float diggingSpeed = 2f;
         [SerializeField] private float initScreamDuration = 0.1f;
         [SerializeField] private float screamDuration = 1f;
-        [SerializeField] private float dangerousGroundDuration = 0.7f;
         [SerializeField] private float screamCooldown = 5f;
-        [SerializeField] private float stunDuration = 1.5f;
+        [SerializeField] private float stunDuration = 2.5f;
 
         public static bool PoisonGround = false;
 
@@ -34,6 +34,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         public static event PlayerEventHandler OnDigDown;
         public static event PlayerScreamEventHandler OnScream;
+        public static event PlayerEventHandler OnHitChip;
+        public static event PlayerEventHandler OnStunned;
 
         private void Awake()
         {
@@ -48,11 +50,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         private void KeyController_OnScream(KeyController sender)
         {
             if (counter <= 0f)
-            {
-                Debug.Log("BURG");
-
                 SetModeInitScream();
-            }
         }
 
         public void SetController(KeyController keyController)
@@ -113,8 +111,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             animator.SetBool(ANIMATOR_SCREAMING_PARAMETER_NAME, true);
 
             DoAction = DoActionScream;
+
             OnScream?.Invoke(this, screamDuration);
-            DangerousGroundManager.Instance.SetToDangerous(dangerousGroundDuration);
             counter = screamDuration;
         }
 
@@ -129,11 +127,12 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             }
         }
 
-        private void SetModeStunned()
+        public void SetModeStunned()
         {
             animator.SetBool(ANIMATOR_DIGGING_PARAMETER_NAME, false);
 
             DoAction = DoActionStunned;
+            OnStunned?.Invoke(this);
             counter = stunDuration;
         }
 
@@ -147,9 +146,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         {
             if (collision.CompareTag(groundChipTag))
             {
-                if (DangerousGroundManager.Instance.IsDangerous)
-                    SetModeStunned();
-
+                OnHitChip?.Invoke(this);
                 collision.GetComponent<GroundChip>().Break();
             }
         }

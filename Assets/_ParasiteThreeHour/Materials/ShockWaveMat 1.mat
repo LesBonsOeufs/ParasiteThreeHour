@@ -36,13 +36,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_5e0049e18dae46ea95fb6150fb51fa8e: 0.2
-    - _magnification: -0.04
-    - _sizeRatio: 1.7779905
+    - Vector1_5e0049e18dae46ea95fb6150fb51fa8e: 0.3
+    - _magnification: -0.037
+    - _sizeRatio: 1.7786484
     - _speed: 1
     - _timeRatio: 0
     m_Colors:
-    - _focalPoint: {r: 0.18220337, g: 0.7297269, b: 10, a: 0}
+    - _focalPoint: {r: 0.17914435, g: 0.5528542, b: 9.994965, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1775195051556322960
 MonoBehaviour:

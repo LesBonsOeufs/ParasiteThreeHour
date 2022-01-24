@@ -7,8 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Com.LesBonsOeufs.ParasiteThreeHour
-{
+namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private Transform groundChipsParent = default;
@@ -19,19 +18,19 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         [SerializeField] private Color groundLayer3Color = Color.black;
 
         [Header("Fields")]
-        [SerializeField] private int levelLength = 30;
-        [SerializeField] private int levelHeight = 30;
-        [SerializeField] private int nbHorizontalSquares = 12;
+        [SerializeField] private int _levelLength = 30;
+        [SerializeField] private int _levelHeight = 30;
+        [SerializeField] private int _nHorizontalSquares = 12;
         [SerializeField] private int nbLayer1Squares = 30;
         [SerializeField] private int nbLayer2Squares = 15;
         [SerializeField] private int nbLayer3Squares = 7;
         [SerializeField] private int chipPerSquare = 6;
 
-        public int LevelLength => levelLength;
-        public int LevelHeight => levelHeight;
-
         public static LevelManager Instance { get; private set; }
 
+        public int LevelLength => _levelLength;
+        public int LevelHeight => _levelHeight;
+        public int NHorizontalSquares => _nHorizontalSquares;
         public Vector3 ChipScale { get; private set; }
 
         private Vector3 worldOriginPosition;
@@ -60,14 +59,14 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
             Vector3 lInitPosition = worldOriginPosition;
             Vector3 lPosition = new Vector3();
-            ChipScale = new Vector3((float)levelLength / nbHorizontalSquares,
-                                         (float)levelHeight / (nbLayer1Squares + nbLayer2Squares + nbLayer3Squares) / chipPerSquare, 1f);
+            ChipScale = new Vector3((float)_levelLength / _nHorizontalSquares,
+                                         (float)_levelHeight / (nbLayer1Squares + nbLayer2Squares + nbLayer3Squares) / chipPerSquare, 1f);
             //Vector3 lChipScale = lScale;
             //lChipScale.y /= chipPerSquare;
 
             for (int i = 0; i < nbLayer1Squares; i++)
             {
-                for (int j = 0; j < nbHorizontalSquares; j++)
+                for (int j = 0; j < _nHorizontalSquares; j++)
                 {
                     for (int k = 0; k < chipPerSquare; k++)
                     {
@@ -83,7 +82,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
             for (int i = 0; i < nbLayer2Squares; i++)
             {
-                for (int j = 0; j < nbHorizontalSquares; j++)
+                for (int j = 0; j < _nHorizontalSquares; j++)
                 {
                     for (int k = 0; k < chipPerSquare; k++)
                     {
@@ -99,7 +98,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
             for (int i = 0; i < nbLayer3Squares; i++)
             {
-                for (int j = 0; j < nbHorizontalSquares; j++)
+                for (int j = 0; j < _nHorizontalSquares; j++)
                 {
                     for (int k = 0; k < chipPerSquare; k++)
                     {
