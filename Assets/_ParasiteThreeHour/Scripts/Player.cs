@@ -9,7 +9,9 @@ using DG.Tweening;
 namespace Com.LesBonsOeufs.ParasiteThreeHour
 {
     public delegate void PlayerEventHandler(Player sender);
+    public delegate void PlayerDigEventHandler(Player sender, float speed);
     public delegate void PlayerScreamEventHandler(Player sender, float duration);
+    public delegate void PlayerWithDigitEventHandler(Player sender, int digit);
 
     public class Player : MonoBehaviour
     {
@@ -17,7 +19,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         private const string ANIMATOR_SCREAMING_PARAMETER_NAME = "isScreaming";
         private const string ANIMATOR_INIT_SCREAM_PARAMETER_NAME = "initScream";
 
-        [SerializeField] private string groundChipTag = "GroundChip";
+        [SerializeField] private string groundBlockTag = "GroundBlock";
         [SerializeField] private float diggingSpeed = 2f;
         [SerializeField] private float initScreamDuration = 0.1f;
         [SerializeField] private float screamDuration = 1f;
@@ -31,15 +33,19 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
         private Animator animator;
         private ParticleSystem digParticles;
         private KeyController controller;
+        private int playerDigit;
 
         private UnityAction DoAction;
 
         private float counter = 0f;
 
-        public static event PlayerEventHandler OnDigDown;
+        private Transform pivot;
+
+        public static event PlayerDigEventHandler OnDigDown;
         public static event PlayerScreamEventHandler OnScream;
         public static event PlayerEventHandler OnHitChip;
         public static event PlayerEventHandler OnStunned;
+        public static event PlayerWithDigitEventHandler OnDeath;
 
         private void Awake()
         {
@@ -49,6 +55,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         private void Start()
         {
+            pivot = transform.parent;
             SetModeNormal();
         }
 
@@ -72,6 +79,11 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             animator.runtimeAnimatorController = runtimeAnimatorController;
         }
 
+        public void SetDigit(int digit)
+        {
+            playerDigit = digit;
+        }
+
         private void Update()
         {
             if (counter > 0f)
@@ -87,13 +99,23 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         private void DoActionNormal()
         {
+            //Check Death
+            if (Camera.main.WorldToScreenPoint(pivot.position).y / Camera.main.pixelHeight > 1f)
+                Die();
+
             if (controller.isDigging)
             {
-                transform.Translate(new Vector3(0f, -diggingSpeed * Time.deltaTime, 0f));
-                OnDigDown?.Invoke(this);
+                pivot.Translate(diggingSpeed * Time.deltaTime * -Vector3.up);
+                OnDigDown?.Invoke(this, diggingSpeed * Time.deltaTime);
             }
 
             animator.SetBool(ANIMATOR_DIGGING_PARAMETER_NAME, controller.isDigging);
+        }
+
+        private void Die()
+        {
+            OnDeath?.Invoke(this, playerDigit);
+            Destroy(pivot.gameObject);
         }
 
         private void SetModeInitScream()
@@ -157,12 +179,12 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(groundChipTag))
+            if (collision.CompareTag(groundBlockTag))
             {
                 digParticles.startColor = collision.GetComponent<SpriteRenderer>().color;
                 digParticles.Emit(10);
                 OnHitChip?.Invoke(this);
-                collision.GetComponent<GroundChip>().Break();
+                collision.GetComponent<GroundBlock>().Break();
             }
         }
 

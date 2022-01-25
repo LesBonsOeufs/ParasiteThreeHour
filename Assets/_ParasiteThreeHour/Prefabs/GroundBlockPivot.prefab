@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5934585379285152556}
   - component: {fileID: 7495787864942177181}
   m_Layer: 0
-  m_Name: GroundChip
-  m_TagString: GroundChip
+  m_Name: GroundBlock
+  m_TagString: GroundBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 591265193051258696}
   m_Layer: 0
-  m_Name: GroundChipPivot
+  m_Name: GroundBlockPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

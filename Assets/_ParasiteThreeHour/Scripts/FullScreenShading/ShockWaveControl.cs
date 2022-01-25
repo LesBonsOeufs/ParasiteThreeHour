@@ -16,6 +16,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
         private const string FEATURE_NAME = "ShockWave";
 
         [SerializeField] private ForwardRendererData rendererData = null;
+        [SerializeField] [Range(0f, 5f)] private  float shockSpeed = 1f;
 
         List<Blit> blitRendererFeatures;
 
@@ -58,7 +59,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
             ShockWaveStart(sender.transform.position, duration);
         }
 
-        private void ShockWaveStart(Vector3 position, float duration)
+        private void ShockWaveStart(Vector3 position, float screamDuration)
         {
             Blit lBlitRendererFeature = GetAvailableBlitRendererFeature();
 
@@ -69,7 +70,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
             lBlitRendererFeature.SetActive(true);
 
             lShockWaveMatInstance.SetVector("_focalPoint", Camera.main.WorldToViewportPoint(position));
-            lShockWaveMatInstance.SetFloat("_speed", 1f / duration);
+            lShockWaveMatInstance.SetFloat("_speed", shockSpeed);
 
             StartCoroutine(ShockWaveCoroutine(lBlitRendererFeature, lShockWaveMatInstance));
         }
@@ -80,7 +81,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.FullScreenShading
 
             float lInitMagnification = shockWaveMatInstance.GetFloat("_magnification");
 
-            while (shockWaveMatInstance.GetFloat("_timeRatio") < 1f)
+            while (shockWaveMatInstance.GetFloat("_timeRatio") < 1f / shockSpeed)
             {
                 yield return null;
 

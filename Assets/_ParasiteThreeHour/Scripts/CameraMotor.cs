@@ -9,8 +9,8 @@ using DG.Tweening;
 namespace Com.LesBonsOeufs.ParasiteThreeHour {
     public class CameraMotor : MonoBehaviour
     {
-        [SerializeField] private float yOffsetFromPlayer = -1f;
-        [SerializeField] private float zoom = 6f;
+        [SerializeField] private float zoom = 4f;
+        [SerializeField] private float yOffset = 1f;
 
         [Header("Camera Movement")]
         [SerializeField] private float screamShakeStrength = 0.55f;
@@ -18,11 +18,9 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
         [SerializeField] private float stunShakeStrength = 1.3f;
         [SerializeField] private float stunShakeDuration = 0.6f;
         [SerializeField] private float adjustmentDuration = 0.4f;
-        [SerializeField] private float smoothFollowDuration = 0.1f;
 
         public void Setup()
         {
-            Player.OnDigDown += Player_OnDigDown;
             Player.OnScream += Player_OnScream;
             Player.OnStunned += Player_OnStunned;
 
@@ -31,16 +29,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
 
             lCamera.orthographicSize = lHorizontalCameraSize / lCamera.aspect;
             transform.position = GameManager.Instance.WorldOriginPoint.position + 
-                                 new Vector3(LevelManager.Instance.LevelLength * 0.5f, yOffsetFromPlayer, transform.position.z);
-        }
-
-        private void Player_OnDigDown (Player sender)
-        {
-            float lPlayerYPos = sender.transform.position.y;
-            Vector3 lNewPosition = new Vector3(transform.position.x, lPlayerYPos + yOffsetFromPlayer, transform.position.z);
-
-            if (transform.position.y > lPlayerYPos + yOffsetFromPlayer)
-                transform.DOMove(lNewPosition, smoothFollowDuration);
+                                 new Vector3(LevelManager.Instance.LevelLength * 0.5f, yOffset, transform.position.z);
         }
 
         private void Player_OnScream (Player sender, float duration)
@@ -65,7 +54,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
 
         private void OnDestroy()
         {
-            Player.OnDigDown -= Player_OnDigDown;
             Player.OnScream -= Player_OnScream;
             Player.OnStunned -= Player_OnStunned;
         }

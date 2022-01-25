@@ -2,6 +2,7 @@
 /// Author : Gabriel Bernabeu
 /// Date : 22/01/2022 10:22
 ///-----------------------------------------------------------------
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
@@ -10,12 +11,12 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
         [SerializeField] private Transform _worldOriginPoint = null;
 
         [Header("Objects")]
-        [SerializeField] private GameObject _groundChipPivotObject = null;
+        [SerializeField] private GameObject _groundBlockPivotObject = null;
         [SerializeField] private GameObject playerPivotObject = null;
         [SerializeField] private GameObject _eyeObject = null;
 
         [Header("Players positioning")]
-        [SerializeField] private float playerChipsNbFromLevelExtremity = 3f;
+        [SerializeField] private float playerNChipsFromLevelExtremity = 3f;
         [SerializeField] private float playerYShift = 0.5f;
         //[SerializeField] private Color player1Color = Color.green;
         //[SerializeField] private Color player2Color = Color.red;
@@ -33,7 +34,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
         private KeyController player1Controller;
         private KeyController player2Controller;
 
-        public GameObject GroundChipObject => _groundChipPivotObject;
+        public GameObject GroundBlockPivotObject => _groundBlockPivotObject;
         public GameObject EyeObject => _eyeObject;
         public Transform WorldOriginPoint => _worldOriginPoint;
 
@@ -54,38 +55,45 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
         private void Start()
         {
-            LevelManager.Instance.InitLevel();
-
             Camera.main.GetComponent<CameraMotor>().Setup();
+            InitPlayers(LevelManager.Instance.Level);
 
-            InitPlayers();
+            List<float> lChippedGroundPositions = new List<float>();
+
+            float lChippedGroundXShiftFromLevelExtremity = LevelManager.Instance.ChipScale.x * playerNChipsFromLevelExtremity;
+            lChippedGroundPositions.Add(WorldOriginPoint.position.x + lChippedGroundXShiftFromLevelExtremity);
+            lChippedGroundPositions.Add(WorldOriginPoint.position.x + LevelManager.Instance.LevelLength - 
+                                        LevelManager.Instance.BlockScale.x - lChippedGroundXShiftFromLevelExtremity);
+            LevelManager.Instance.InitLevel(lChippedGroundPositions);
         }
 
-        private void InitPlayers()
+        private void InitPlayers(Transform parent)
         {
-            float lXShiftFromLevelExtremity = LevelManager.Instance.ChipScale.x * 0.5f + 
-                                              LevelManager.Instance.ChipScale.x * playerChipsNbFromLevelExtremity;
+            float lPlayerXShiftFromLevelExtremity = LevelManager.Instance.ChipScale.x * 0.5f + 
+                                              LevelManager.Instance.ChipScale.x * playerNChipsFromLevelExtremity;
 
-            Transform lPlayerTransform = Instantiate(playerPivotObject).transform;
+            Transform lPlayerTransform = Instantiate(playerPivotObject, parent).transform;
             Player lPlayerScript = lPlayerTransform.GetChild(0).GetComponent<Player>();
             //lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player1Color;
-            lPlayerTransform.position = WorldOriginPoint.position + new Vector3(lXShiftFromLevelExtremity, playerYShift, 0f);
+            lPlayerTransform.position = WorldOriginPoint.position + new Vector3(lPlayerXShiftFromLevelExtremity, playerYShift, 0f);
 
             player1Controller = new KeyController();
             player1Controller.SetKeys(player1Dig, player1Scream);
             lPlayerScript.SetController(player1Controller);
             lPlayerScript.SetRuntimeAnimatorController(player1Animations);
+            lPlayerScript.SetDigit(1);
 
-            lPlayerTransform = Instantiate(playerPivotObject).transform;
+            lPlayerTransform = Instantiate(playerPivotObject, parent).transform;
             lPlayerScript = lPlayerTransform.GetChild(0).GetComponent<Player>();
             //lPlayerTransform.GetChild(0).GetComponent<SpriteRenderer>().color = player2Color;
             lPlayerTransform.position = WorldOriginPoint.position 
-                                        + new Vector3(LevelManager.Instance.LevelLength - lXShiftFromLevelExtremity, playerYShift, 0f);
+                                        + new Vector3(LevelManager.Instance.LevelLength - lPlayerXShiftFromLevelExtremity, playerYShift, 0f);
 
             player2Controller = new KeyController();
             player2Controller.SetKeys(player2Dig, player2Scream);
             lPlayerScript.SetController(player2Controller);
             lPlayerScript.SetRuntimeAnimatorController(player2Animations);
+            lPlayerScript.SetDigit(2);
         }
 
         private void Update()

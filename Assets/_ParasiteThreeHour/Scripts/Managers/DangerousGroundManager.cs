@@ -41,7 +41,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
         private void Start()
         {
             Player.OnScream += Player_OnScream;
-            Player.OnHitChip += Player_OnHitChip;
+            Player.OnDigDown += Player_OnDigDown;
 
             InitEyesStock();
             SetModeVoid();
@@ -54,7 +54,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
             for (int i = 0; i < maxEyesIfDangerous; i++)
             {
-                lEyeInstance = Instantiate(lEyeOriginalObject);
+                lEyeInstance = Instantiate(lEyeOriginalObject, LevelManager.Instance.Level);
                 eyesStock.Add(lEyeInstance.GetComponent<Eye>());
                 lEyeInstance.SetActive(false);
             }
@@ -65,7 +65,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             SetToDangerous();
         }
 
-        private void Player_OnHitChip(Player sender)
+        private void Player_OnDigDown(Player sender, float speed)
         {
             if (IsDangerous)
             {
@@ -128,32 +128,34 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             }
 
             Eye lEye;
-            List<Transform> lChips = GroundChip.List;
-            Transform lChip;
-            Vector2 lChipPivotPosition;
-            int lRandomChipIndex;
+            List<Transform> lBlocks = GroundBlock.List;
+            Transform lBlock;
+            Vector2 lBlockPivotPosition;
+            int lRandomBlockIndex;
             Vector2 lOriginPoint = GameManager.Instance.WorldOriginPoint.position;
-            Vector2 lLevelSize = new Vector2(LevelManager.Instance.LevelLength, LevelManager.Instance.LevelHeight);
+            float lLevelLength = LevelManager.Instance.LevelLength;
+            List<float> lBannedXPositions = LevelManager.Instance.ChippedGroundXPositions;
             List<Vector2Int> lBannedPositions = new List<Vector2Int>();
 
             for (int i = 0; i < currentEyes.Count; i++)
             {
                 lEye = currentEyes[i];
-                lRandomChipIndex = Random.Range(0, lChips.Count);
+                lRandomBlockIndex = Random.Range(0, lBlocks.Count);
 
-                lChip = lChips[lRandomChipIndex];
-                lChipPivotPosition = lChip.parent.position;
+                lBlock = lBlocks[lRandomBlockIndex];
+                lBlockPivotPosition = lBlock.parent.position;
 
-                if (lBannedPositions.Contains(Vector2Int.FloorToInt(lChipPivotPosition))
-                       || lChipPivotPosition.x == lOriginPoint.x || lChipPivotPosition.y == lOriginPoint.y
-                       || lChipPivotPosition.x == lOriginPoint.x + lLevelSize.x || lChipPivotPosition.y == lOriginPoint.y - lLevelSize.y)
+                if (lBannedPositions.Contains(Vector2Int.FloorToInt(lBlockPivotPosition))
+                    || lBannedXPositions.Contains(lBlockPivotPosition.x)
+                    || lBlockPivotPosition.x == lOriginPoint.x || lBlockPivotPosition.y == lOriginPoint.y
+                    || lBlockPivotPosition.x == lOriginPoint.x + lLevelLength)
                 {
                     lEye.gameObject.SetActive(false);
                     continue;
                 }
 
-                lEye.transform.position = lChip.position - Vector3.forward;
-                lBannedPositions.Add(Vector2Int.FloorToInt(lChipPivotPosition));
+                lEye.transform.position = lBlock.position - Vector3.forward;
+                lBannedPositions.Add(Vector2Int.FloorToInt(lBlockPivotPosition));
 
                 lEye.gameObject.SetActive(true);
             }
@@ -178,7 +180,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
         private void OnDestroy()
         {
             Player.OnScream -= Player_OnScream;
-            Player.OnHitChip -= Player_OnHitChip;
+            Player.OnDigDown -= Player_OnDigDown;
 
             Instance = null;
         }
