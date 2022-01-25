@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
     public class GameManager : MonoBehaviour
@@ -94,6 +95,11 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             lPlayerScript.SetController(player2Controller);
             lPlayerScript.SetRuntimeAnimatorController(player2Animations);
             lPlayerScript.SetDigit(2);
+        }
+
+        public void Restart()
+        {
+            SceneManager.LoadScene(0);
         }
 
         private void Update()
