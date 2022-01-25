@@ -12,18 +12,19 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
     {
         [SerializeField] private float dangerousGroundDuration = 0.7f;
         [SerializeField] private float animDurationOnStun = 1f;
-        [SerializeField] private int minEyesIfDangerous = 25;
-        [SerializeField] private int maxEyesIfDangerous = 35;
+        [SerializeField] private int minEyesIfDangerous = 15;
+        [SerializeField] private int maxEyesIfDangerous = 25;
+        [SerializeField] private int maxAttempts = 30;
 
-        public static DangerousGroundManager Instance { get; private set; }
-        public bool IsDangerous { get; private set; }
 
         private List<Eye> eyesStock = new List<Eye>();
         private List<Eye> currentEyes = new List<Eye>();
-        private float counter;
-
+        private float dangerousCounter;
+        private int attemptsCounter;
         private UnityAction DoAction;
 
+        public static DangerousGroundManager Instance { get; private set; }
+        public bool IsDangerous { get; private set; }
 
         private void Awake()
         {
@@ -74,7 +75,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
                 IsDangerous = false;
 
-                counter = animDurationOnStun;
+                dangerousCounter = animDurationOnStun;
             }
         }
 
@@ -94,13 +95,13 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
         private void SetToDangerous()
         {
-            if (counter <= 0f)
+            if (dangerousCounter <= 0f)
             {
                 RandomEyesPositionAndQuantity();
                 IsDangerous = true;
             }
 
-            counter = dangerousGroundDuration;
+            dangerousCounter = dangerousGroundDuration;
             DoAction = DoActionDangerous;
 
             EyesOpen(true);
@@ -108,9 +109,9 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
         private void DoActionDangerous()
         {
-            counter -= Time.deltaTime;
+            dangerousCounter -= Time.deltaTime;
 
-            if (counter <= 0f)
+            if (dangerousCounter <= 0f)
             {
                 IsDangerous = false;
                 SetModeVoid();
@@ -139,20 +140,33 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
             for (int i = 0; i < currentEyes.Count; i++)
             {
+                attemptsCounter = 0;
+
                 lEye = currentEyes[i];
                 lRandomBlockIndex = Random.Range(0, lBlocks.Count);
 
                 lBlock = lBlocks[lRandomBlockIndex];
                 lBlockPivotPosition = lBlock.parent.position;
 
-                if (lBannedPositions.Contains(Vector2Int.FloorToInt(lBlockPivotPosition))
+                while (lBannedPositions.Contains(Vector2Int.FloorToInt(lBlockPivotPosition))
                     || lBannedXPositions.Contains(lBlockPivotPosition.x)
                     || lBlockPivotPosition.x == lOriginPoint.x || lBlockPivotPosition.y == lOriginPoint.y
                     || lBlockPivotPosition.x == lOriginPoint.x + lLevelLength)
                 {
+                    attemptsCounter++;
+                    lRandomBlockIndex = Random.Range(0, lBlocks.Count);
+                    lBlock = lBlocks[lRandomBlockIndex];
+                    lBlockPivotPosition = lBlock.parent.position;
+
+                    if (attemptsCounter >= maxAttempts)
+                        break;
+
                     lEye.gameObject.SetActive(false);
                     continue;
                 }
+
+                if (attemptsCounter >= maxAttempts)
+                    continue;
 
                 lEye.transform.position = lBlock.position - Vector3.forward;
                 lBannedPositions.Add(Vector2Int.FloorToInt(lBlockPivotPosition));

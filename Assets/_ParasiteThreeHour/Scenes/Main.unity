@@ -421,10 +421,10 @@ MonoBehaviour:
   playerYShift: 0.5
   player1Animations: {fileID: 9100000, guid: 51be876f81a51bd4da653500b3bcae08, type: 2}
   player2Animations: {fileID: 22100000, guid: 2f263bdc64ce7294ca7e8282833dec2f, type: 2}
-  player1Dig: 304
-  player1Scream: 109
-  player2Dig: 281
-  player2Scream: 102
+  player1Dig: 115
+  player1Scream: 103
+  player2Dig: 109
+  player2Scream: 106
 --- !u!1 &410548495
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,8 +571,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dangerousGroundDuration: 0.7
   animDurationOnStun: 1
-  minEyesIfDangerous: 60
-  maxEyesIfDangerous: 60
+  minEyesIfDangerous: 7
+  maxEyesIfDangerous: 14
+  maxAttempts: 30
 --- !u!1 &603792725
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,15 +618,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundLayer1Color: {r: 1, g: 1, b: 1, a: 1}
-  groundLayer2Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
-  groundLayer3Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-  groundFinalLayerColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
+  groundLayer2Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  groundLayer3Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  groundFinalLayerColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   _levelLength: 30
   nHorizontalBlocks: 7
-  nLayer1Lines: 3
-  nLayer2Lines: 7
-  nLayer3Lines: 4
+  nLayer1Lines: 12
+  nLayer2Lines: 15
+  nLayer3Lines: 20
   chipPerBlock: 12
+  blockYScale: 1.2
   playerMinYPos: 1
 --- !u!1 &628573036
 GameObject:
@@ -742,7 +744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 175, y: 20}
+  m_AnchoredPosition: {x: 70, y: 20}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &652379570
@@ -1500,7 +1502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 47.499985, y: -40}
+  m_AnchoredPosition: {x: 152.49997, y: -40}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1112394322
@@ -1581,7 +1583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -137.5, y: -40.000015}
+  m_AnchoredPosition: {x: -152.5, y: -40.000015}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1188211405
@@ -1924,7 +1926,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 20}
+  m_AnchoredPosition: {x: 175, y: 20}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1933016097
@@ -1999,7 +2001,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 152.49998, y: -40}
+  m_AnchoredPosition: {x: 47.5, y: -40}
   m_SizeDelta: {x: 90, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973476236
@@ -2081,7 +2083,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -175, y: 20}
-  m_SizeDelta: {x: 75, y: 45}
+  m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2096115686
 MonoBehaviour:

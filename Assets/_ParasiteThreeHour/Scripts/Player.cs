@@ -21,7 +21,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         [SerializeField] private string groundBlockTag = "GroundBlock";
         [SerializeField] private float diggingSpeed = 2f;
-        [SerializeField] private float initScreamDuration = 0.1f;
+        [SerializeField] private float initScreamDuration = 0.16f;
         [SerializeField] private float screamDuration = 1f;
         [SerializeField] private float screamCooldown = 5f;
         [SerializeField] private float stunDuration = 2.5f;

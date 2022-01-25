@@ -22,6 +22,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
         [SerializeField] private int nLayer2Lines = 7;
         [SerializeField] private int nLayer3Lines = 4;
         [SerializeField] private int chipPerBlock = 6;
+        [SerializeField] private float blockYScale = 1f;
         
         [Header("In-Game")]
         [SerializeField] private float playerMinYPos = 1f;
@@ -54,8 +55,11 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
             float lBlockSideLength = (float)LevelLength / nHorizontalBlocks;
 
-            BlockScale = new Vector3(lBlockSideLength, lBlockSideLength, 1f);
-            ChipScale = new Vector3(lBlockSideLength, lBlockSideLength / chipPerBlock, 1f);
+            if (blockYScale == 0f)
+                blockYScale = lBlockSideLength;
+
+            BlockScale = new Vector3(lBlockSideLength, blockYScale, 1f);
+            ChipScale = new Vector3(lBlockSideLength, blockYScale / chipPerBlock, 1f);
         }
 
         private void Start()
@@ -99,9 +103,9 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             {
                 if (currentLine < nLayer1Lines)
                     lLayerColor = groundLayer1Color;
-                else if (currentLine < nLayer2Lines)
+                else if (currentLine < nLayer1Lines + nLayer2Lines)
                     lLayerColor = groundLayer2Color;
-                else if (currentLine < nLayer3Lines)
+                else if (currentLine < nLayer1Lines + nLayer2Lines + nLayer3Lines)
                     lLayerColor = groundLayer3Color;
                 else
                     lLayerColor = groundFinalLayerColor;

@@ -178,11 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a3ed22f485abd4ababaeda2dff1ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundChipTag: GroundChip
+  groundBlockTag: GroundBlock
   diggingSpeed: 2
-  initScreamDuration: 0.1
+  initScreamDuration: 0.16
   screamDuration: 1
-  screamCooldown: 1
+  screamCooldown: 2.5
   stunDuration: 2.5
   stunColor: {r: 0.6132076, g: 0.44197226, b: 0.4658152, a: 1}
   nStunColorLoops: 3
