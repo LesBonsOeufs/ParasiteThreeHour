@@ -135,7 +135,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             int lRandomBlockIndex;
             Vector2 lOriginPoint = GameManager.Instance.WorldOriginPoint.position;
             float lLevelLength = LevelManager.Instance.LevelLength;
-            List<float> lBannedXPositions = LevelManager.Instance.ChippedGroundXPositions;
+            List<int> lBannedXPositions = LevelManager.Instance.ChippedGroundFlooredXPositions;
             List<Vector2Int> lBannedPositions = new List<Vector2Int>();
 
             for (int i = 0; i < currentEyes.Count; i++)
@@ -148,8 +148,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
                 lBlock = lBlocks[lRandomBlockIndex];
                 lBlockPivotPosition = lBlock.parent.position;
 
-                while (lBannedPositions.Contains(Vector2Int.FloorToInt(lBlockPivotPosition))
-                    || lBannedXPositions.Contains(lBlockPivotPosition.x)
+                while (lBannedXPositions.Contains(Mathf.FloorToInt(lBlockPivotPosition.x))
+                    || lBannedPositions.Contains(Vector2Int.FloorToInt(lBlockPivotPosition))
                     || lBlockPivotPosition.x == lOriginPoint.x || lBlockPivotPosition.y == lOriginPoint.y
                     || lBlockPivotPosition.x == lOriginPoint.x + lLevelLength)
                 {

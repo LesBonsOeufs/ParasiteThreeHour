@@ -83,8 +83,6 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour {
 
         private void ResetButton_OnClick()
         {
-            Debug.Log("Reset!");
-
             winBackground.gameObject.SetActive(false);
             player1ScreamBar.localScale = Vector3.one;
             player2ScreamBar.localScale = Vector3.one;

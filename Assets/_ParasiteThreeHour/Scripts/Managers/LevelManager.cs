@@ -31,7 +31,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
 
         public static LevelManager Instance { get; private set; }
 
-        public List<float> ChippedGroundXPositions { get; private set; }
+        public List<int> ChippedGroundFlooredXPositions { get; private set; }
         public int LevelLength => _levelLength;
         //public int LevelHeight => _levelHeight;
         public Vector3 BlockScale { get; private set; }
@@ -82,12 +82,10 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             UpdateLevel();
         }
 
-        public void InitLevel(List<float> lChippedGroundXPositions)
+        public void InitLevel(List<int> lChippedGroundFlooredXPositions)
         {
-            Debug.Log("Start!");
-
             currentLine = 0;
-            ChippedGroundXPositions = lChippedGroundXPositions;
+            ChippedGroundFlooredXPositions = lChippedGroundFlooredXPositions;
 
             UpdateLevel();
         }
@@ -114,7 +112,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
                 {
                     lPosition.x = lLevelPosition.x + BlockScale.x * i;
 
-                    if (ChippedGroundXPositions.Contains(lPosition.x))
+                    if (ChippedGroundFlooredXPositions.Contains(Mathf.FloorToInt(lPosition.x)))
                     {
                         for (int j = 0; j < chipPerBlock; j++)
                         {

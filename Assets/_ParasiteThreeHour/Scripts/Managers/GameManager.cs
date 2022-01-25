@@ -59,12 +59,13 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour.Managers {
             Camera.main.GetComponent<CameraMotor>().Setup();
             InitPlayers(LevelManager.Instance.Level);
 
-            List<float> lChippedGroundPositions = new List<float>();
+            List<int> lChippedGroundPositions = new List<int>();
 
             float lChippedGroundXShiftFromLevelExtremity = LevelManager.Instance.ChipScale.x * playerNChipsFromLevelExtremity;
-            lChippedGroundPositions.Add(WorldOriginPoint.position.x + lChippedGroundXShiftFromLevelExtremity);
-            lChippedGroundPositions.Add(WorldOriginPoint.position.x + LevelManager.Instance.LevelLength - 
-                                        LevelManager.Instance.BlockScale.x - lChippedGroundXShiftFromLevelExtremity);
+            lChippedGroundPositions.Add(Mathf.FloorToInt(WorldOriginPoint.position.x + lChippedGroundXShiftFromLevelExtremity));
+            lChippedGroundPositions.Add(Mathf.FloorToInt(WorldOriginPoint.position.x + LevelManager.Instance.LevelLength - 
+                                        LevelManager.Instance.BlockScale.x - lChippedGroundXShiftFromLevelExtremity));
+
             LevelManager.Instance.InitLevel(lChippedGroundPositions);
         }
 
