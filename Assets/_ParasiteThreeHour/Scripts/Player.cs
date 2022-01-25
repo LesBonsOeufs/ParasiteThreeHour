@@ -29,7 +29,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         [Header("Sounds")]
         [SerializeField] private List<AudioClip> diggingClips;
-        [SerializeField] private AudioClip screamingClip;
+        [SerializeField] private List<AudioClip> screamingClips;
         [SerializeField] private List<AudioClip> stunnedClips;
 
         public static bool PoisonGround = false;
@@ -84,7 +84,7 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
 
         private void KeyController_OnScream(KeyController sender)
         {
-            if (ScreamCooldownCounter <= 0f)
+            if (ScreamCooldownCounter <= 0f && DoAction != DoActionStunned)
                 SetModeInitScream();
         }
 
@@ -170,7 +170,8 @@ namespace Com.LesBonsOeufs.ParasiteThreeHour
             OnScream?.Invoke(this, screamDuration);
             ScreamCooldownCounter = screamCooldown;
 
-            audioSource.clip = screamingClip;
+            int lRandomIndex = Mathf.RoundToInt(Random.value * (screamingClips.Count - 1));
+            audioSource.clip = screamingClips[lRandomIndex];
             audioSource.Play();
         }
 
